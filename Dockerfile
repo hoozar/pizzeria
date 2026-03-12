@@ -9,8 +9,19 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pgsql pdo_pgsql
 RUN docker-php-ext-enable pgsql pdo_pgsql
 
+# Add xdebug support
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
+# Setup cron and cron tasks
+RUN apt-get -y install cron
+COPY crontab /etc/cron.d/pizza-orders-cron
+RUN chmod 0744 /etc/cron.d/pizza-orders-cron
+RUN touch /var/log/cron.log
+
+# setup misc
+RUN apt-get -y install procps
+
+# Clear instalations
 # RUN rm -rf /var/lib/apt/lists/*
 
 # Quick dirty fix for git ownership error
@@ -30,22 +41,3 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-interaction --prefer-dist -
 
 # Create storage directory
 RUN mkdir -p storage && chmod 777 storage
-
-# Expose port
-EXPOSE 8000
-
-# Start PHP built-in server
-# CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
-
-# setup cron and cron tasks
-RUN apt-get -y install cron
-COPY crontab /etc/cron.d/pizza-orders-cron
-RUN chmod 0744 /etc/cron.d/pizza-orders-cron
-RUN touch /var/log/cron.log
-
-#CMD cron && tail -f /var/log/cron.log
-
-
-# setup misc
-RUN apt-get -y install procps
-
