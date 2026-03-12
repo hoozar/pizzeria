@@ -33,7 +33,7 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: ['cron && tail -f /var/log/cron.log']
+    command: ['cron', '-f', '-l', '2']
 
 volumes:
 ###> doctrine/doctrine-bundle ###

@@ -38,8 +38,14 @@ EXPOSE 8000
 # CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
 
 # setup cron and cron tasks
-ADD crontab /etc/cron.d/pizza-orders-cron
-RUN chmod 0644 /etc/cron.d/pizza-orders-cron
-RUN touch /var/log/cron.log
 RUN apt-get -y install cron
-CMD cron && tail -f /var/log/cron.log
+COPY crontab /etc/cron.d/pizza-orders-cron
+RUN chmod 0744 /etc/cron.d/pizza-orders-cron
+RUN touch /var/log/cron.log
+
+#CMD cron && tail -f /var/log/cron.log
+
+
+# setup misc
+RUN apt-get -y install procps
+

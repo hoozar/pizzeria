@@ -39,9 +39,11 @@ class OrderFinishOldestCommand extends Command
             $order = $this->orderRepository->findOneBy(['finishedAt' => 1], ['placedAt' => 'ASC']);
             if ($order) {
                 $this->messageBus->dispatch(new FinishOrder($order->getId()));
+                $this->messageBus->dispatch(new CheckOrdersQueue());
+                $io->success('Order finished and delivered. Enjoy your pizza!');
+            } else {
+                $io->success('No orders to finish.');
             }
-            $this->messageBus->dispatch(new CheckOrdersQueue());
-            $io->success('Order finished and delivered. Enjoy your pizza!');
 
             return Command::SUCCESS;
         } catch (\Throwable $e) {

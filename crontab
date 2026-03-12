@@ -1,2 +1,2 @@
-* * * * * /app/bin/console order:finish-latest >> /var/log/cron.log 2>&1
+* * * * * root /usr/local/bin/php /app/bin/console order:finish-oldest >> /var/log/cron.log 2>&1
 # Don't remove the empty line at the end of this file. It is required to run the cron job
