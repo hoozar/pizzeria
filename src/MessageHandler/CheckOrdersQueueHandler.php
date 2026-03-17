@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler;
 
 use App\Message\CheckOrdersQueue;
@@ -10,7 +12,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class CheckOrdersQueueHandler
 {
-    private const TO_LONG_WAITING_TRESHOLD = 60;
+    private const int TO_LONG_WAITING_TRESHOLD = 60;
+
     public function __construct(
         private readonly OrderRepository $orderRepository,
         private readonly LoggerInterface $logger,

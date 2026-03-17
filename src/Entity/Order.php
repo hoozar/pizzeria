@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Form\OrderDTO;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table('orderr')]
@@ -100,7 +101,7 @@ class Order
         if ($this->finishedAt === 1) {
             $this->finishedAt = time();
         } else {
-            throw new \RuntimeException('Order already finished');
+            throw new RuntimeException('Order already finished');
         }
     }
 

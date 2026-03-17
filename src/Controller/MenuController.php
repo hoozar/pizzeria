@@ -27,7 +27,7 @@ class MenuController extends AbstractController
         return $this->render(
             'menu.html.twig',
             [
-                'menuItems' => array_map(fn(Menu $menu) => $menu->toArray(), $menuItems),
+                'menuItems' => $menuItems,
                 'form' => $this->createForm(OrderType::class, null, ['action' => $this->generateUrl('place_order'),]),
                 'queue' => $orderRepository->getQueueSummary(),
             ]

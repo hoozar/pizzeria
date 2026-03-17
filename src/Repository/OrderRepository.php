@@ -12,6 +12,9 @@ class OrderRepository extends ServiceEntityRepository
 {
     use FindByCriteriaTrait;
 
+    // arbitralnie, ale można dać do Menu i per rodzaj pizzy
+    private const int PIZZA_PREPARING_TIME = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Order::class);
@@ -32,7 +35,7 @@ class OrderRepository extends ServiceEntityRepository
 
         foreach ($orders as $order) {
             $quantity += $order->getQuantity();
-            $waitTime += $order->getQuantity() * 10; // arbitralnie, ale można dać do Menu i per rodzaj pizzy
+            $waitTime += $order->getQuantity() * self::PIZZA_PREPARING_TIME;
         }
 
         return [

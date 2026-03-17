@@ -41,19 +41,19 @@
     {%  for menuItem in menuItems %}
         <div class="row p-2 border border-warning">
             <div class="col">
-                {{ menuItem.name }}
+                {{ menuItem.getName() }}
             </div>
             <div class="col">
-                {{ menuItem.description }}
+                {{ menuItem.getDescription() }}
             </div>
             <div class="col">
-                {{ menuItem.price }}
+                {{ menuItem.getPrice() }}
             </div>
             <div class="col">
                 {% if menuItem.picture is empty %}
                     <img src="{{ '/picture/menu/noimage.png' }}" alt="No image" width="180px" height="180px" />
                 {% else %}
-                    <img src="{{ '/picture/menu/' ~ menuItem.picture }}" alt="Menu image" width="180px" height="180px" />
+                    <img src="{{ '/picture/menu/' ~ menuItem.getPicture() }}" alt="Menu image" width="180px" height="180px" />
                 {% endif %}
             </div>
         </div>

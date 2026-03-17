@@ -12,7 +12,6 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class FinishOrderHandler
 {
-
     public function __construct(
         private readonly OrderRepository $orderRepository,
     ) {
