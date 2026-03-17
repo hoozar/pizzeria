@@ -12,11 +12,10 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final class CheckOrdersQueueHandler
 {
-    private const int TO_LONG_WAITING_TRESHOLD = 60;
-
     public function __construct(
         private readonly OrderRepository $orderRepository,
         private readonly LoggerInterface $logger,
+        private readonly int $queueWaitingThreshold,
     ) {
         // empty
     }
@@ -24,7 +23,7 @@ final class CheckOrdersQueueHandler
     public function __invoke(CheckOrdersQueue $message): void
     {
         $stats = $this->orderRepository->getQueueSummary();
-        if ($stats['waitTime'] > self::TO_LONG_WAITING_TRESHOLD) {
+        if ($stats['waitTime'] > $this->queueWaitingThreshold) {
             $this->logger->warning('Queue is waiting for too long: ' . $stats['waitTime'] . ' seconds');
         }
     }
